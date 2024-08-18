@@ -21,29 +21,31 @@ Node narr[MAX+1];
 vector<int> varr;
 
 int SearchTree(int idx){
-    Node node = narr[idx];
-    if(node.left == -1 && node.right == -1){
-        if(!node.leaf_check){
-            node.leaf_check = true;
+    Node* node = &narr[idx];
+    node->cnt++;
+
+    if(node->left == -1 && node->right == -1){
+        if(!node->leaf_check){
+            node->leaf_check = true;
             leaf_cnt--;
         }
         return idx;
     }
-    else if(node.left == -1){
-        return SearchTree(node.right);
+    else if(node->left == -1){
+        return SearchTree(node->right);
     }
-    else if(node.right == -1){
-        return SearchTree(node.left);
+    else if(node->right == -1){
+        return SearchTree(node->left);
     }
     else {
-        int l_cnt = narr[node.left].cnt;
-        int r_cnt = narr[node.right].cnt;
+        int l_cnt = narr[node->left].cnt;
+        int r_cnt = narr[node->right].cnt;
 
         if(l_cnt <= r_cnt){
-            return SearchTree(node.left);
+            return SearchTree(node->left);
         }
         else{
-            return SearchTree(node.right);
+            return SearchTree(node->right);
         }
         
     }
@@ -73,7 +75,12 @@ int main(){
         }
     }
 
+    //Debug
+    // for(auto a: varr){
+    //     cout << a << " ";
+    // }
+
     long long len = varr.size();
-    cout << varr[K % len];
+    cout << varr[(K-1) % len];
     return 0;
 }
