@@ -9,8 +9,6 @@ using namespace std;
 struct Node{
     int left;
     int right;
-    int cnt = 0;
-    bool leaf_check = false;
     Node(){};
     Node(int l, int r): left(l), right(r){};
 };
@@ -22,13 +20,8 @@ vector<int> varr;
 
 int SearchTree(int idx){
     Node* node = &narr[idx];
-    node->cnt++;
 
     if(node->left == -1 && node->right == -1){
-        if(!node->leaf_check){
-            node->leaf_check = true;
-            leaf_cnt--;
-        }
         return idx;
     }
     else if(node->left == -1){
@@ -38,16 +31,14 @@ int SearchTree(int idx){
         return SearchTree(node->left);
     }
     else {
-        int l_cnt = narr[node->left].cnt;
-        int r_cnt = narr[node->right].cnt;
-
-        if(l_cnt <= r_cnt){
+        if(K%2){
+            K/= 2;
             return SearchTree(node->left);
         }
         else{
+            K/= 2;
             return SearchTree(node->right);
         }
-        
     }
 }
 
@@ -65,22 +56,23 @@ int main(){
         }
     }
     cin >> K;
+    cout << SearchTree(1);
 
-    while(true){
-        int arrival = SearchTree(1);
-        varr.push_back(arrival);
+    // while(true){
+    //     int arrival = SearchTree(1);
+    //     varr.push_back(arrival);
 
-        if(leaf_cnt == 0){
-            break;
-        }
-    }
+    //     if(leaf_cnt == 0){
+    //         break;
+    //     }
+    // }
 
-    //Debug
+    // //Debug
     // for(auto a: varr){
     //     cout << a << " ";
     // }
 
-    long long len = varr.size();
-    cout << varr[(K-1) % len];
+    // long long len = varr.size();
+    // cout << varr[(K-1) % len];
     return 0;
 }
