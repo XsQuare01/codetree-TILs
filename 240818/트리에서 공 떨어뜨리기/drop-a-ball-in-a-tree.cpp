@@ -2,7 +2,6 @@
 #define MOD 13
 
 #include<iostream>
-#include<vector>
 
 using namespace std;
 
@@ -14,9 +13,7 @@ struct Node{
 };
 
 long long N, K;
-int leaf_cnt = 0;
 Node narr[MAX+1];
-vector<int> varr;
 
 int SearchTree(int idx){
     Node* node = &narr[idx];
@@ -32,7 +29,7 @@ int SearchTree(int idx){
     }
     else {
         if(K%2){
-            K/= 2;
+            K = (K+1) / 2;
             return SearchTree(node->left);
         }
         else{
@@ -51,28 +48,8 @@ int main(){
         int l, r;
         cin >> l >> r;
         narr[i] = Node(l, r);
-        if(l == -1 && r == -1){
-            leaf_cnt++;
-        }
     }
     cin >> K;
     cout << SearchTree(1);
-
-    // while(true){
-    //     int arrival = SearchTree(1);
-    //     varr.push_back(arrival);
-
-    //     if(leaf_cnt == 0){
-    //         break;
-    //     }
-    // }
-
-    // //Debug
-    // for(auto a: varr){
-    //     cout << a << " ";
-    // }
-
-    // long long len = varr.size();
-    // cout << varr[(K-1) % len];
     return 0;
 }
