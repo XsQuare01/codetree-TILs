@@ -66,7 +66,7 @@ int main(){
     }
     cin >> K;
 
-    for(int i = 0; i < MAX; i++){
+    while(true){
         int arrival = SearchTree(1);
         varr.push_back(arrival);
 
